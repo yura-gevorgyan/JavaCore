@@ -2,8 +2,9 @@ package homework;
 
 public class Home1 {
     public static void main(String[] args) {
-        // first 
-        for (int i = 0; i < 7; i++) {
+        // first
+        int i;
+        for (i = 0; i < 7; i++) {
             System.out.println("******");
         }
         System.out.println();
