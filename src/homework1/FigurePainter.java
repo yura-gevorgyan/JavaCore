@@ -2,6 +2,7 @@ package homework1;
 
 public class FigurePainter {
     public static void main(String[] args) {
+
         //first figure
         for (int i = 1; i < 6; i++) {
             for (int j = 0; j < i; j++) {
@@ -17,6 +18,7 @@ public class FigurePainter {
             for (int j = 0; j < i; j++) {
                 System.out.print("* ");
             }
+
             System.out.println();
         }
 
