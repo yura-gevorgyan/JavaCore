@@ -36,10 +36,8 @@ public class ArrayUtil {
 
         System.out.print("Even numbers in array are ");
         for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] != 0) {
-                if (numbers[i] % 2 == 0) {
-                    System.out.print(numbers[i] + " ");
-                }
+            if (numbers[i] % 2 == 0) {
+                System.out.print(numbers[i] + " ");
             }
         }
 
@@ -47,10 +45,8 @@ public class ArrayUtil {
 
         System.out.print("Odd numbers in array are ");
         for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] != 0) {
-                if (numbers[i] % 2 == 1) {
-                    System.out.print(numbers[i] + " ");
-                }
+            if (numbers[i] % 2 == 1) {
+                System.out.print(numbers[i] + " ");
             }
 
         }
