@@ -1,28 +1,39 @@
 package homeworks;
 
 public class ArrayUtil {
-    public static void main(String[] args) {
-        int[] numbers = {1, 6, 3, 9, 15, 52, -3, 5, 8};
+    int[] numbers ;
+
+
+
+    void arrayPrint() {
         for (int i = 0; i < numbers.length; i++) {
             System.out.print(numbers[i] + " ");
         }
+    }
 
-        System.out.println();
-
+    void firstNum() {
         System.out.println("First number in array is " + numbers[0]);
+    }
 
+    void lastNum() {
         System.out.println("Last number in array is " + numbers[numbers.length - 1]);
+    }
 
+    void length() {
         System.out.println("Array length is " + numbers.length);
+    }
 
+    double minNum() {
         int min = numbers[0];
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] < min) {
                 min = numbers[i];
             }
         }
-        System.out.println("Minimum number in array is " + min);
+        return min;
+    }
 
+    void middleNum() {
         if (numbers.length > 2) {
             if (numbers.length % 2 == 0) {
                 System.out.print("Middle numbers in array are" + numbers[(numbers.length / 2) - 1] + " ");
@@ -33,30 +44,35 @@ public class ArrayUtil {
         } else {
             System.out.println("Can't print middle values");
         }
+    }
 
-        System.out.print("Even numbers in array are ");
+    int evenNumCount() {
+        int evenCount = 0;
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] % 2 == 0) {
-                System.out.print(numbers[i] + " ");
+                evenCount++;
             }
         }
+        return evenCount;
+    }
 
-        System.out.println();
-
-        System.out.print("Odd numbers in array are ");
+    int oddNumCount() {
+        int oddCount = 0;
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] % 2 == 1) {
-                System.out.print(numbers[i] + " ");
+                oddCount++;
             }
 
         }
-        System.out.println();
+        return oddCount;
+    }
 
+    double sum() {
         double result = 0.0;
         for (int j = 0; j < numbers.length; j++) {
             result += numbers[j];
         }
-        System.out.println("Sum of numbers is " + result);
-        System.out.println("Arithmetic average is " + result / numbers.length);
+        return result;
     }
+
 }
