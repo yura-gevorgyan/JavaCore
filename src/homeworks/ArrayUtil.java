@@ -3,8 +3,6 @@ package homeworks;
 public class ArrayUtil {
     int[] numbers ;
 
-
-
     void arrayPrint() {
         for (int i = 0; i < numbers.length; i++) {
             System.out.print(numbers[i] + " ");
