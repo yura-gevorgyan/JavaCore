@@ -5,6 +5,19 @@ public class Box {
     double height;
     double depth;
 
+//    Box() {
+//        System.out.println("Construction of the Box object");
+//        widht = 10;
+//        height = 10;
+//        depth = 10;
+//    }
+
+    Box(double widht, double height, double depth) {
+        this.widht = widht;
+        this.height = height;
+        this.depth = depth;
+    }
+
     void volume() {
         System.out.print("Volume: ");
         System.out.println(widht * height * depth);
