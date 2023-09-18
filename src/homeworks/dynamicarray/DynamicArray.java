@@ -6,13 +6,20 @@ public class DynamicArray {
 
     //սա մեր մասիվի մեջ ավելացված էլեմենտների քանակն է
     private int size = 0;
+    int lastCount = 0;
+
+
+
+
 
     //ստուգել եթե մասիվի մեջ տեղ չկա-> կանչել extend()
     //և ավելացնենք
     public void add(int value) {
+
         if (size == array.length - 1) {
             extend();
             array[size++] = value;
+
         } else {
             array[size++] = value;
         }
@@ -43,9 +50,10 @@ public class DynamicArray {
 
     //տպել մասիվի ավելացված էլեմենտները
     public void print() {
-        for (int i = 0; i < size; i++) {
+        for (int i = lastCount; i < size; i++) {
             System.out.print(array[i] + " ");
         }
         System.out.println();
+        lastCount = size;
     }
 }
