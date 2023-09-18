@@ -50,6 +50,14 @@ public class DynamicArray {
 
     //տպել մասիվի ավելացված էլեմենտները
     public void print() {
+        System.out.print("All numbers in array: ");
+        for (int i = 0; i < size; i++) {
+            System.out.print(array[i] + " ");
+        }
+
+        System.out.println();
+
+        System.out.print("New add numbers: ");
         for (int i = lastCount; i < size; i++) {
             System.out.print(array[i] + " ");
         }
