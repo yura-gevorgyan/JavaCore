@@ -6,7 +6,7 @@ public class DynamicArray {
 
     //սա մեր մասիվի մեջ ավելացված էլեմենտների քանակն է
     private int size = 0;
-    int lastCount = 0;
+    private int lastCount = 0;
 
 
 
