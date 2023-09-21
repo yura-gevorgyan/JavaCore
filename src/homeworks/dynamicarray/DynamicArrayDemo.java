@@ -8,17 +8,47 @@ public class DynamicArrayDemo {
             dynamicArray.add(i);
         }
 
-        System.out.println(dynamicArray.getByIndex(9));
-        System.out.println(dynamicArray.getByIndex(10));
+        dynamicArray.print();
+
+        dynamicArray.add(309);
+        dynamicArray.add(34);
+        dynamicArray.add(3);
+        dynamicArray.add(7);
+        dynamicArray.add(77);
+        dynamicArray.add(9);
+
+        dynamicArray.printNewAddValues();
+
+        dynamicArray.printNewAddValues();
+
+
         System.out.println(dynamicArray.getByIndex(-1));
+        System.out.println(dynamicArray.getByIndex(100));
+        System.out.println(dynamicArray.getByIndex(4));
 
+        dynamicArray.deleteByIndex(6);
+        dynamicArray.deleteByIndex(-1);
+        dynamicArray.deleteByIndex(100);
         dynamicArray.print();
 
-        dynamicArray.add(6);
-        dynamicArray.add(93);
-        dynamicArray.add(76);
-
+        dynamicArray.set(3,66);
+        dynamicArray.set(-1,77);
+        dynamicArray.set(100,77);
         dynamicArray.print();
+
+        dynamicArray.add(6,101);
+        dynamicArray.add(-1,727);
+        dynamicArray.add(112,6161);
+        dynamicArray.print();
+
+        System.out.println(dynamicArray.exists(4));
+        System.out.println(dynamicArray.exists(9));
+
+        System.out.println(dynamicArray.getIndexByValue(9));
+        System.out.println(dynamicArray.getIndexByValue(999));
+
+
+
     }
 
 }

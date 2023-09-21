@@ -1,4 +1,4 @@
-package homeworks;
+package homeworks.arrayutil;
 
 public class ArrayUtil {
     int[] numbers ;

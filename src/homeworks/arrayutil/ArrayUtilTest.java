@@ -1,4 +1,6 @@
-package homeworks;
+package homeworks.arrayutil;
+
+import homeworks.arrayutil.ArrayUtil;
 
 public class ArrayUtilTest {
     public static void main(String[] args) {

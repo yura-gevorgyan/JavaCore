@@ -1,4 +1,6 @@
-package homeworks;
+package homeworks.figurepainter;
+
+import homeworks.figurepainter.FigurePainter;
 
 public class FigurePainterTest {
     public static void main(String[] args) {

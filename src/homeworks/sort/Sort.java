@@ -1,4 +1,4 @@
-package homeworks;
+package homeworks.sort;
 
 public class Sort {
     int[] array = new int[]{};

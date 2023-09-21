@@ -9,9 +9,6 @@ public class DynamicArray {
     private int lastCount = 0;
 
 
-
-
-
     //ստուգել եթե մասիվի մեջ տեղ չկա-> կանչել extend()
     //և ավելացնենք
     public void add(int value) {
@@ -48,20 +45,81 @@ public class DynamicArray {
 
     }
 
+
     //տպել մասիվի ավելացված էլեմենտները
     public void print() {
         System.out.print("All numbers in array: ");
         for (int i = 0; i < size; i++) {
             System.out.print(array[i] + " ");
         }
-
         System.out.println();
+    }
 
-        System.out.print("New add numbers: ");
-        for (int i = lastCount; i < size; i++) {
-            System.out.print(array[i] + " ");
+    public void printNewAddValues() {
+        if (lastCount == size) {
+            System.out.println("You do not have new add numbers");
+        } else {
+            System.out.print("New add numbers: ");
+            for (int i = lastCount; i < size; i++) {
+                System.out.print(array[i] + " ");
+            }
+            System.out.println();
+            lastCount = size;
         }
-        System.out.println();
-        lastCount = size;
+    }
+
+    public void deleteByIndex(int index) {
+        if (index >= 0 && index < size) {
+            for (int j = index; j < size - 1; j++) {
+                array[j] = array[j + 1];
+            }
+            size--;
+        } else {
+            System.out.println("Your add index is out of size");
+        }
+
+    }
+
+    public void set(int index, int value) {
+        if (index >= 0 && index < size) {
+            array[index] = value;
+        } else {
+            System.out.println("Your add index is out of size");
+        }
+    }
+
+    public void add(int index, int value) {
+        if (index >= 0 && index < size) {
+            size++;
+            for (int i = size; i > index; i--) {
+                array[i] = array[i - 1];
+            }
+            array[index] = value;
+        } else {
+            System.out.println("Your add index is out of size");
+        }
+
+
+    }
+
+
+    public boolean exists(int value) {
+        for (int i = 0; i < size; i++) {
+            if (array[i] == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getIndexByValue(int value) {
+
+        for (int i = 0; i < size; i++) {
+            if (array[i] == value) {
+                return i;
+            }
+        }
+        return -1;
+
     }
 }
