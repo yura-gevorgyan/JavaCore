@@ -8,7 +8,6 @@ public class BraceChecker {
         this.text = text;
     }
 
-
     void check() {
         Stack stack = new Stack();
         Stack stack1 = new Stack();
@@ -84,7 +83,5 @@ public class BraceChecker {
 
 
         }
-
-
     }
 }

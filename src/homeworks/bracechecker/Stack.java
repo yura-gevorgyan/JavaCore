@@ -9,17 +9,22 @@ public class Stack {
     }
 
     void push(int item) {
-        if (index == 9) {
-            System.out.println("Stack is full");
+        if (index == array.length - 1) {
+            extend();
         } else {
             array[++index] = item;
         }
 
     }
 
-    int arrayLength(){
-        return index;
+    private void extend() {
+        int[] numbers = new int[array.length + 10];
+        for (int i = 0; i < array.length; i++) {
+            numbers[i] = array[i];
+        }
+        array = numbers;
     }
+
 
     int pop() {
         if (index < 0) {
