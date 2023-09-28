@@ -9,6 +9,7 @@ public class DynamicArrayDemo {
         }
 
         dynamicArray.print();
+        dynamicArray.printNewAddValues();
 
         dynamicArray.add(309);
         dynamicArray.add(34);

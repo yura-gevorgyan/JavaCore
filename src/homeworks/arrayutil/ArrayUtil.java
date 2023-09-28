@@ -1,7 +1,12 @@
 package homeworks.arrayutil;
 
 public class ArrayUtil {
-    int[] numbers ;
+    private int[] numbers ;
+
+    public void setNumbers(int ... array){
+        numbers = new int[array.length];
+        System.arraycopy(array, 0, numbers, 0, array.length);
+    }
 
 
     void arrayPrint() {

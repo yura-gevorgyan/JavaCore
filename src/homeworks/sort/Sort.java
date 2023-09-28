@@ -1,7 +1,12 @@
 package homeworks.sort;
 
 public class Sort {
-    int[] array = new int[]{};
+    private int[] array;
+
+    public void setArray(int ... array){
+        this.array = new int[array.length];
+        System.arraycopy(array,0,this.array,0,array.length);
+    }
 
     void sortFromMin() {
 

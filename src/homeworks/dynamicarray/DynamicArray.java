@@ -66,6 +66,7 @@ public class DynamicArray {
             System.out.println();
             lastCount = size;
         }
+
     }
 
     public void deleteByIndex(int index) {

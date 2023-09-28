@@ -1,4 +1,6 @@
-package classwork.chapter7;
+package classwork.chapter7.objectarg;
+
+import classwork.chapter7.objectarg.Test;
 
 public class TestOb2 {
     public static void main(String[] args) {

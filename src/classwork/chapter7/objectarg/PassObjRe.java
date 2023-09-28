@@ -1,4 +1,4 @@
-package classwork.chapter7;
+package classwork.chapter7.objectarg;
 
 public class PassObjRe {
     public static void main(String[] args) {
