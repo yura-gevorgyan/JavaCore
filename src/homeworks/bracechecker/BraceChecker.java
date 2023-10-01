@@ -24,13 +24,10 @@ public class BraceChecker {
                     break;
                 case '(', '[', '{':
                     temp1 = (char) stack1.pop();
-                    switch (temp1) {
-                        case 0:
-                            System.out.println("Error opened but not closed at: " + j);
-                            break;
+                    if (temp1 == 0) {
+                        System.out.println("Error opened but not closed at: " + j);
                     }
                     break;
-
             }
         }
 
@@ -43,10 +40,7 @@ public class BraceChecker {
                 case ')':
                     temp = (char) stack.pop();
                     switch (temp) {
-                        case '[':
-                            System.out.println("Error opened " + temp + " but closed ) at: " + i);
-                            break;
-                        case '{':
+                        case '[', '{':
                             System.out.println("Error opened " + temp + " but closed ) at: " + i);
                             break;
                         case 0:
@@ -56,10 +50,7 @@ public class BraceChecker {
                 case '}':
                     temp = (char) stack.pop();
                     switch (temp) {
-                        case '[':
-                            System.out.println("Error opened " + temp + " but closed } at: " + i);
-                            break;
-                        case '(':
+                        case '[', '(':
                             System.out.println("Error opened " + temp + " but closed } at: " + i);
                             break;
                         case 0:
@@ -69,10 +60,7 @@ public class BraceChecker {
                 case ']':
                     temp = (char) stack.pop();
                     switch (temp) {
-                        case '{':
-                            System.out.println("Error opened " + temp + " but closed ] at: " + i);
-                            break;
-                        case '(':
+                        case '{', '(':
                             System.out.println("Error opened " + temp + " but closed ] at: " + i);
                             break;
                         case 0:

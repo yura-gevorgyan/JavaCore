@@ -19,9 +19,7 @@ public class Stack {
 
     private void extend() {
         int[] numbers = new int[array.length + 10];
-        for (int i = 0; i < array.length; i++) {
-            numbers[i] = array[i];
-        }
+        System.arraycopy(array, 0, numbers, 0, array.length);
         array = numbers;
     }
 

@@ -1,9 +1,9 @@
 package homeworks.arrayutil;
 
 public class ArrayUtil {
-    private int[] numbers ;
+    private int[] numbers;
 
-    public void setNumbers(int ... array){
+    public void setNumbers(int... array) {
         numbers = new int[array.length];
         System.arraycopy(array, 0, numbers, 0, array.length);
     }
@@ -37,6 +37,16 @@ public class ArrayUtil {
         return min;
     }
 
+    double maxNum() {
+        int max = numbers[0];
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] > max) {
+                max = numbers[i];
+            }
+        }
+        return max;
+    }
+
     void middleNum() {
         if (numbers.length > 2) {
             if (numbers.length % 2 == 0) {
@@ -50,25 +60,29 @@ public class ArrayUtil {
         }
     }
 
-    int evenNumCount() {
+    void evenNum() {
         int evenCount = 0;
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] % 2 == 0) {
+                System.out.print(numbers[i] + " ");
                 evenCount++;
             }
         }
-        return evenCount;
+        System.out.print("Even number Count: " + evenCount);
+        System.out.println();
     }
 
-    int oddNumCount() {
+    void oddNum() {
         int oddCount = 0;
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] % 2 == 1) {
+                System.out.print(numbers[i] + " ");
                 oddCount++;
             }
 
         }
-        return oddCount;
+        System.out.print("Odd number Count: " + oddCount);
+        System.out.println();
     }
 
     double sum() {
