@@ -3,10 +3,10 @@ package homeworks.employee;
 public class EmployeeStorage {
 
     private Employee[] employees = new Employee[10];
-    private int size;
+    private int size = 0;
 
     public void add(Employee employee) {
-        if (size == employees.length) {
+        if (size == employees.length - 1) {
             extend();
         }
         employees[size++] = employee;
@@ -14,48 +14,56 @@ public class EmployeeStorage {
 
     public void print() {
         for (int i = 0; i < size; i++) {
-            System.out.println("NAME: " + employees[i].getName());
-            System.out.println("SURNAME: " + employees[i].getSurname());
-            System.out.println("EmployeeID: " + employees[i].getEmployeeID());
-            System.out.println("SALARY: " + employees[i].getSalary());
-            System.out.println("COMPANY: " + employees[i].getCompany());
-            System.out.println("POSITION: " + employees[i].getPosition());
-            System.out.println("----------------------------");
-        }
-    }
-
-    public void searchByID(String ID) {
-        for (int i = 0; i < size; i++) {
-            if (employees[i].getEmployeeID().toLowerCase().contains(ID.toLowerCase())) {
-                System.out.println("NAME: " + employees[i].getName());
-                System.out.println("SURNAME: " + employees[i].getSurname());
-                System.out.println("EmployeeID: " + employees[i].getEmployeeID());
-                System.out.println("SALARY: " + employees[i].getSalary());
-                System.out.println("COMPANY: " + employees[i].getCompany());
-                System.out.println("POSITION: " + employees[i].getPosition());
-                System.out.println("----------------------------");
-            }
-        }
-    }
-
-    public void searchByCompany(String company) {
-        for (int i = 0; i < size; i++) {
-            if (employees[i].getCompany().toLowerCase().contains(company.toLowerCase())) {
-                System.out.println("NAME: " + employees[i].getName());
-                System.out.println("SURNAME: " + employees[i].getSurname());
-                System.out.println("EmployeeID: " + employees[i].getEmployeeID());
-                System.out.println("SALARY: " + employees[i].getSalary());
-                System.out.println("COMPANY: " + employees[i].getCompany());
-                System.out.println("POSITION: " + employees[i].getPosition());
-                System.out.println("----------------------------");
-            }
+            System.out.println(employees[i]);
         }
     }
 
     private void extend() {
-        Employee[] item = new Employee[employees.length + 10];
-        System.arraycopy(employees, 0, item, 0, employees.length);
-        employees = item;
+        Employee[] tmp = new Employee[employees.length + 10];
+        System.arraycopy(employees, 0, tmp, 0, employees.length);
+        employees = tmp;
     }
 
+    public Employee getByID(String employeeID) {
+        for (int i = 0; i < size; i++) {
+            if (employees[i].getID().equals(employeeID)) {
+                return employees[i];
+            }
+        }
+        return null;
+    }
+
+
+    public void searchEmployee(Company byId) {
+        for (int i = 0; i < size; i++) {
+            if (employees[i].getCompany().equals(byId)) {
+                System.out.println(employees[i]);
+            }
+        }
+    }
+
+    public void deleteEmployee(Employee employeeFromStorage) {
+        for (int i = 0; i < size; i++) {
+            if (employees[i].equals(employeeFromStorage)) {
+                for (int j = i; j < size - 1; j++) {
+                    employees[i] = employees[i + 1];
+                }
+            }
+        }
+        size--;
+    }
+
+    public void deleteEmployeeByCompany(Company companyStorageById) {
+        for (int i = 0; i < size; i++) {
+            for (int k = 0; k < size; k++) {
+                if (employees[k].getCompany().equals(companyStorageById)) {
+                    for (int j = k; j < size - 1; j++) {
+                        employees[k] = employees[k + 1];
+                    }
+                    size--;
+                }
+            }
+        }
+    }
 }
+

@@ -21,6 +21,7 @@ public class BraceCheckerTest {
                     break;
                 case "1":
                     bc.check();
+                    isRun = false;
                     break;
             }
         }
