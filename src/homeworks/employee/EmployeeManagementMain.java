@@ -1,5 +1,10 @@
 package homeworks.employee;
 
+import homeworks.employee.model.Company;
+import homeworks.employee.model.Employee;
+import homeworks.employee.storage.CompanyStorage;
+import homeworks.employee.storage.EmployeeStorage;
+
 import java.util.Scanner;
 
 public class EmployeeManagementMain {
@@ -31,7 +36,7 @@ public class EmployeeManagementMain {
                     employeeStorage.print();
                     break;
                 case "5":
-                    searchEmployeeByID();
+                    searchEmployeeById();
                     break;
                 case "6":
                     searchEmployeeByCompany();
@@ -54,70 +59,76 @@ public class EmployeeManagementMain {
 
     private static void deleteCompany() {
         companyStorage.print();
-        System.out.println("Please choose COMPANY ID FOR DELETE");
-        String companyID = scanner.nextLine();
-        Company companyStorageById = companyStorage.getById(companyID);
+        System.out.println("Please choose COMPANY Id FOR DELETE");
+        String companyId = scanner.nextLine();
+        Company companyStorageById = companyStorage.getById(companyId);
 
         if (companyStorageById == null){
-            System.out.println("Company with " + companyID + " ID does not existed");
+            System.out.println("Company with " + companyId + " Id does not existed");
             return;
         }
+
         employeeStorage.deleteEmployeeByCompany(companyStorageById);
         companyStorage.deleteCompany(companyStorageById);
+
+        System.out.println("Company and Employees are deleted");
 
     }
 
     private static void deleteEmployee() {
         companyStorage.print();
-        System.out.println("Please input COMPANY ID");
-        String companyID = scanner.nextLine();
-        Company companyStorageById = companyStorage.getById(companyID);
+        System.out.println("Please input COMPANY Id");
+        String companyId = scanner.nextLine();
+        Company companyStorageById = companyStorage.getById(companyId);
 
         if (companyStorageById == null) {
-            System.out.println("Company with " + companyID + " ID does not existed");
+            System.out.println("Company with " + companyId + " Id does not existed");
             return;
         }
 
         employeeStorage.searchEmployee(companyStorageById);
 
-        System.out.println("Please input EMPLOYEE ID");
-        String employeeID = scanner.nextLine();
-        Employee employeeFromStorage = employeeStorage.getByID(employeeID);
+        System.out.println("Please input EMPLOYEE Id");
+        String employeeId = scanner.nextLine();
+        Employee employeeFromStorage = employeeStorage.getById(employeeId);
 
         if (employeeFromStorage == null) {
-            System.out.println("Employee with " + employeeID + " ID does not existed !!!");
+            System.out.println("Employee with " + employeeId + " Id does not existed !!!");
             return;
         }
 
         if (!employeeFromStorage.getCompany().equals(companyStorageById)){
-            System.out.println("Please input FULL ID");
+            System.out.println("Please input FULL Id");
+            return;
         }
 
         employeeStorage.deleteEmployee(employeeFromStorage);
+
+        System.out.println("Employee is deleted");
     }
 
     private static void changeEmployee() {
         companyStorage.print();
-        System.out.println("Please input COMPANY ID");
-        String companyID = scanner.nextLine();
-        Company companyStorageById = companyStorage.getById(companyID);
+        System.out.println("Please input COMPANY Id");
+        String companyId = scanner.nextLine();
+        Company companyStorageById = companyStorage.getById(companyId);
 
         if (companyStorageById == null) {
-            System.out.println("Company with " + companyID + " ID does not existed");
+            System.out.println("Company with " + companyId + " Id does not existed");
             return;
         }
 
         employeeStorage.searchEmployee(companyStorageById);
 
-        System.out.println("Please input EMPLOYEE ID");
-        String employeeID = scanner.nextLine();
-        Employee employeeStorageByID = employeeStorage.getByID(employeeID);
-        if (employeeStorageByID == null) {
-            System.out.println("Employee with " + employeeID + " ID does not existed !!!");
+        System.out.println("Please input EMPLOYEE Id");
+        String employeeId = scanner.nextLine();
+        Employee employeeStorageById = employeeStorage.getById(employeeId);
+        if (employeeStorageById == null) {
+            System.out.println("Employee with " + employeeId + " Id does not existed !!!");
             return;
         }
 
-        if (!employeeStorageByID.getCompany().equals(companyStorageById)){
+        if (!employeeStorageById.getCompany().equals(companyStorageById)){
             System.out.println("Wrong !!!!");
             return;
         }
@@ -132,25 +143,26 @@ public class EmployeeManagementMain {
         String employeePosition = scanner.nextLine();
         System.out.println("Please input NEW SALARY");
         double employeeSalary = Double.parseDouble(scanner.nextLine());
-        employeeStorageByID.setName(employeeName);
-        employeeStorageByID.setSurname(employeeSurname);
-        employeeStorageByID.setPhone(employeePhone);
-        employeeStorageByID.setPosition(employeePosition);
-        employeeStorageByID.setSalary(employeeSalary);
+        employeeStorageById.setName(employeeName);
+        employeeStorageById.setSurname(employeeSurname);
+        employeeStorageById.setPhone(employeePhone);
+        employeeStorageById.setPosition(employeePosition);
+        employeeStorageById.setSalary(employeeSalary);
         System.out.println("Employee data is changed !!!");
 
     }
 
     private static void changeCompany() {
-        System.out.println("Please choose COMPANY ID");
         companyStorage.print();
-        String companyID = scanner.nextLine();
-        Company companyStorageById = companyStorage.getById(companyID);
+        System.out.println("Please choose COMPANY Id");
+        String companyId = scanner.nextLine();
+        Company companyStorageById = companyStorage.getById(companyId);
 
         if (companyStorageById == null) {
-            System.out.println("Company with " + companyID + " ID does not existed");
+            System.out.println("Company with " + companyId + " Id does not existed");
             return;
         }
+
         System.out.println("Please input NEW NAME");
         String companyName = scanner.nextLine();
         System.out.println("Please input NEW ADDRESS");
@@ -164,28 +176,29 @@ public class EmployeeManagementMain {
         companyStorageById.setEmail(companyEmail);
         companyStorageById.setPhone(companyPhone);
         System.out.println("Company data is changed !!!");
+
     }
 
     private static void searchEmployeeByCompany() {
-        System.out.println("Please input COMPANY ID");
         companyStorage.print();
-        String companyID = scanner.nextLine();
-        Company byId = companyStorage.getById(companyID);
+        System.out.println("Please input COMPANY Id");
+        String companyId = scanner.nextLine();
+        Company byId = companyStorage.getById(companyId);
         if (byId == null) {
-            System.out.println("Company with " + companyID + " ID does not existed");
+            System.out.println("Company with " + companyId + " Id does not existed");
         } else {
             employeeStorage.searchEmployee(byId);
         }
     }
 
-    private static void searchEmployeeByID() {
-        System.out.println("Please input EMPLOYEE ID");
-        String employeeID = scanner.nextLine();
-        Employee byID = employeeStorage.getByID(employeeID);
-        if (byID == null) {
-            System.out.println("Employee with " + employeeID + " ID does not existed !!!");
+    private static void searchEmployeeById() {
+        System.out.println("Please input EMPLOYEE Id");
+        String employeeId = scanner.nextLine();
+        Employee byId = employeeStorage.getById(employeeId);
+        if (byId == null) {
+            System.out.println("Employee with " + employeeId + " Id does not existed !!!");
         } else {
-            System.out.println(byID);
+            System.out.println(byId);
         }
 
     }
@@ -193,17 +206,17 @@ public class EmployeeManagementMain {
     private static void addEmployee() {
         System.out.println("Please input COMPANY");
         companyStorage.print();
-        String companyID = scanner.nextLine();
-        Company companyFromStorage = companyStorage.getById(companyID);
+        String companyId = scanner.nextLine();
+        Company companyFromStorage = companyStorage.getById(companyId);
         if (companyFromStorage == null) {
-            System.out.println("Company with " + companyID + " ID does not exist");
+            System.out.println("Company with " + companyId + " Id does not exist");
             return;
         }
-        System.out.println("Please input EMPLOYEE ID");
-        String employeeID = scanner.nextLine();
-        Employee employeeFromStorage = employeeStorage.getByID(employeeID);
+        System.out.println("Please input EMPLOYEE Id");
+        String employeeId = scanner.nextLine();
+        Employee employeeFromStorage = employeeStorage.getById(employeeId);
         if (employeeFromStorage != null) {
-            System.out.println("Employee with " + employeeID + " ID have already existed !!!");
+            System.out.println("Employee with " + employeeId + " Id have already existed !!!");
             return;
         }
         System.out.println("Please input NAME");
@@ -216,17 +229,17 @@ public class EmployeeManagementMain {
         String employeePosition = scanner.nextLine();
         System.out.println("Please input SALARY");
         Double employeeSalary = Double.parseDouble(scanner.nextLine());
-        Employee employee = new Employee(employeeID, employeeName, employeeSurname, employeePhone, employeePosition, companyFromStorage, employeeSalary);
+        Employee employee = new Employee(employeeId, employeeName, employeeSurname, employeePhone, employeePosition, companyFromStorage, employeeSalary);
         employeeStorage.add(employee);
         System.out.println("Employee is added !!!");
     }
 
     private static void addCompany() {
-        System.out.println("Please input ID");
-        String companyID = scanner.nextLine();
-        Company companyFromStorage = companyStorage.getById(companyID);
+        System.out.println("Please input Id");
+        String companyId = scanner.nextLine();
+        Company companyFromStorage = companyStorage.getById(companyId);
         if (companyFromStorage != null) {
-            System.out.println("Company with " + companyID + " id have already existed");
+            System.out.println("Company with " + companyId + " id have already existed");
             return;
         }
         System.out.println("Please input NAME");
@@ -237,7 +250,7 @@ public class EmployeeManagementMain {
         String companyEmail = scanner.nextLine();
         System.out.println("Please input PHONE");
         String companyPhone = scanner.nextLine();
-        Company company = new Company(companyID, companyName, companyAddress, companyEmail, companyPhone);
+        Company company = new Company(companyId, companyName, companyAddress, companyEmail, companyPhone);
         companyStorage.add(company);
         System.out.println("Company is added !!!");
 
@@ -250,9 +263,9 @@ public class EmployeeManagementMain {
         System.out.println("Please input 2 for ADD EMPLOYEE");
         System.out.println("Please input 3 for PRINT ALL COMPANY");
         System.out.println("Please input 4 for PRINT ALL EMPLOYEE");
-        System.out.println("Please input 5 for SEARCH EMPLOYEE BY ID");
+        System.out.println("Please input 5 for SEARCH EMPLOYEE BY Id");
         System.out.println("Please input 6 for SEARCH EMPLOYEE BY COMPANY");
-        System.out.println("Please input 7 for CHANGE COMPANY DATA BY ID");
+        System.out.println("Please input 7 for CHANGE COMPANY DATA BY Id");
         System.out.println("Please input 8 for CHANGE EMPLOYEE DATA");
         System.out.println("Please input 9 for DELETE EMPLOYEE");
         System.out.println("Please input 10 for DELETE COMPANY");

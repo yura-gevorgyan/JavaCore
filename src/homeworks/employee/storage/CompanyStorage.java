@@ -1,4 +1,6 @@
-package homeworks.employee;
+package homeworks.employee.storage;
+
+import homeworks.employee.model.Company;
 
 public class CompanyStorage {
 
@@ -37,10 +39,9 @@ public class CompanyStorage {
         for (int i = 0; i < size; i++) {
             if (companies[i].equals(companyStorageById)) {
                 for (int j = i; j < size - 1; j++) {
-                    companies[i] = companies[i + 1];
+                    companies[j] = companies[j + 1];
                 }
             }
-
         }
         size-- ;
     }

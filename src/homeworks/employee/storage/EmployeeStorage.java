@@ -1,4 +1,7 @@
-package homeworks.employee;
+package homeworks.employee.storage;
+
+import homeworks.employee.model.Company;
+import homeworks.employee.model.Employee;
 
 public class EmployeeStorage {
 
@@ -24,7 +27,7 @@ public class EmployeeStorage {
         employees = tmp;
     }
 
-    public Employee getByID(String employeeID) {
+    public Employee getById(String employeeID) {
         for (int i = 0; i < size; i++) {
             if (employees[i].getID().equals(employeeID)) {
                 return employees[i];
@@ -46,7 +49,7 @@ public class EmployeeStorage {
         for (int i = 0; i < size; i++) {
             if (employees[i].equals(employeeFromStorage)) {
                 for (int j = i; j < size - 1; j++) {
-                    employees[i] = employees[i + 1];
+                    employees[j] = employees[j + 1];
                 }
             }
         }
@@ -54,11 +57,11 @@ public class EmployeeStorage {
     }
 
     public void deleteEmployeeByCompany(Company companyStorageById) {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i <= size; i++) {
             for (int k = 0; k < size; k++) {
                 if (employees[k].getCompany().equals(companyStorageById)) {
                     for (int j = k; j < size - 1; j++) {
-                        employees[k] = employees[k + 1];
+                        employees[j] = employees[j + 1];
                     }
                     size--;
                 }
