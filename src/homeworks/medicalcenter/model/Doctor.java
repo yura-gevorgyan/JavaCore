@@ -1,11 +1,13 @@
 package homeworks.medicalcenter.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Doctor extends Person{
 
     private String email;
     private String profession;
+
 
     public Doctor(String id, String name, String surname, String phone, String email, String profession) {
         super(id, name, surname, phone);
@@ -32,6 +34,7 @@ public class Doctor extends Person{
         this.profession = profession;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,9 +55,9 @@ public class Doctor extends Person{
 
     @Override
     public String toString() {
-        return "Doctor{" +
+        return super.toString() + " Doctor{" +
                 "email='" + email + '\'' +
                 ", profession='" + profession + '\'' +
-                "} " + super.toString();
+                "} " ;
     }
 }
