@@ -1,6 +1,7 @@
 package homeworks.onlinemarket.storage;
 
 import homeworks.onlinemarket.model.User;
+import homeworks.onlinemarket.model.UserType;
 
 public class UserStorage {
 
@@ -20,9 +21,11 @@ public class UserStorage {
         users = tmp;
     }
 
-    public void print(){
+    public void printUser() {
         for (int i = 0; i < size; i++) {
-            System.out.println(users[i]);
+            if (users[i].getUserType().equals(UserType.USER)) {
+                System.out.println(users[i]);
+            }
         }
     }
 
@@ -31,6 +34,15 @@ public class UserStorage {
         for (int i = 0; i < size; i++) {
             if (users[i].getEmail().equals(userEmail)
                     && users[i].getPassword().equals(password)) {
+                return users[i];
+            }
+        }
+        return null;
+    }
+
+    public User getByEmail(String userEmail) {
+        for (int i = 0; i < size; i++) {
+            if (users[i].getEmail().equals(userEmail)) {
                 return users[i];
             }
         }

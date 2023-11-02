@@ -1,6 +1,7 @@
 package homeworks.onlinemarket.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Order {
 
@@ -8,21 +9,31 @@ public class Order {
     private User user;
     private Product product;
     private Date date;
+    private int count;
     private double price;
     private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
 
-    public Order(String id, User user, Product product, Date date, double price, OrderStatus orderStatus, PaymentMethod paymentMethod) {
+    public Order(String id, User user, Product product, Date date, int count, double price, OrderStatus orderStatus, PaymentMethod paymentMethod) {
         this.id = id;
         this.user = user;
         this.product = product;
         this.date = date;
+        this.count = count;
         this.price = price;
         this.orderStatus = orderStatus;
         this.paymentMethod = paymentMethod;
     }
 
     public Order() {
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public String getId() {
@@ -79,6 +90,39 @@ public class Order {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        if (count != order.count) return false;
+        if (Double.compare(price, order.price) != 0) return false;
+        if (!Objects.equals(id, order.id)) return false;
+        if (!Objects.equals(user, order.user)) return false;
+        if (!Objects.equals(product, order.product)) return false;
+        if (!Objects.equals(date, order.date)) return false;
+        if (orderStatus != order.orderStatus) return false;
+        return paymentMethod == order.paymentMethod;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (product != null ? product.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + count;
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
+        result = 31 * result + (paymentMethod != null ? paymentMethod.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -4,7 +4,9 @@ import homeworks.onlinemarket.model.*;
 import homeworks.onlinemarket.storage.OrderStorage;
 import homeworks.onlinemarket.storage.ProductStorage;
 import homeworks.onlinemarket.storage.UserStorage;
+import homeworks.onlinemarket.util.UUIDUtil;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class OnlineMarketMain implements Command {
@@ -26,31 +28,70 @@ public class OnlineMarketMain implements Command {
                 case LOGIN:
                     login();
                     break;
+                case REGISTER:
+                    register();
+                    break;
             }
         }
     }
 
+    private static void register() {
+
+        String userId = UUIDUtil.randomId();
+
+        System.out.println("Please input NAME");
+        String userName = scanner.nextLine();
+
+        System.out.println("Please input E MAIL");
+        String userEmail = scanner.nextLine();
+        User userFromStorage = userStorage.getByEmail(userEmail);
+
+        if (userFromStorage != null) {
+            System.out.println("User with this EMAIL have already added");
+            return;
+        }
+
+        System.out.println("Please input password");
+        String userPassword = scanner.nextLine();
+
+        for (UserType value : UserType.values()) {
+            System.out.print(value + " ");
+        }
+
+        System.out.println("Please choose USER TYPE");
+        String userTypeStr = scanner.nextLine();
+        try {
+
+            UserType userType = UserType.valueOf(userTypeStr.toUpperCase());
+            User user = new User(userId, userName, userEmail, userPassword, userType);
+            userStorage.add(user);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Please write right USER TYPE !!!");
+        }
+    }
+
     private static void login() {
+
         System.out.println("Please input E MAIL");
         String userEmail = scanner.nextLine();
         System.out.println("Please input PASSWORD");
         String password = scanner.nextLine();
 
         User user = userStorage.searchUser(userEmail, password);
+
         if (user == null) {
             System.out.println("Invalid E-mail or Password !!!");
             return;
         }
 
         if (user.getUserType().equals(UserType.USER)) {
-            userCommand();
+            userCommand(user);
         }
 
         if (user.getUserType().equals(UserType.ADMIN)) {
             adminCommand();
         }
-
-
     }
 
     private static void adminCommand() {
@@ -72,7 +113,7 @@ public class OnlineMarketMain implements Command {
                     productStorage.print();
                     break;
                 case PRINT_USERS:
-                    userStorage.print();
+                    userStorage.printUser();
                     break;
                 case PRINT_ORDERS:
                     orderStorage.print();
@@ -100,23 +141,37 @@ public class OnlineMarketMain implements Command {
         }
 
         for (OrderStatus value : OrderStatus.values()) {
-            if (value.equals(orderFromStorage.getOrderStatus())) {
-                continue;
-            }
-            System.out.println(value);
+            System.out.print(value + " ");
         }
 
         System.out.println("Please choose NEW STATUS");
         String orderStatusStr = scanner.nextLine();
+
         try {
             OrderStatus orderStatus = OrderStatus.valueOf(orderStatusStr.toUpperCase());
-            orderFromStorage.setOrderStatus(orderStatus);
-            System.out.println("ORDER STATUS is updated !!!");
-        }catch (IllegalArgumentException e){
+            if (orderFromStorage.getOrderStatus() == OrderStatus.NEW && orderStatus == OrderStatus.DELIVERED) {
+                int count = orderFromStorage.getProduct().getStockQty() - orderFromStorage.getCount();
+                orderFromStorage.setOrderStatus(orderStatus);
+                orderFromStorage.getProduct().setStockQty(count);
+                System.out.println("ORDER STATUS is updated !!!");
+                return;
+            }
+
+            if (orderFromStorage.getOrderStatus() == OrderStatus.DELIVERED && orderStatus == OrderStatus.CANCELED || orderStatus == OrderStatus.NEW) {
+                int count = orderFromStorage.getCount() + orderFromStorage.getProduct().getStockQty();
+                orderFromStorage.getProduct().setStockQty(count);
+                orderFromStorage.setOrderStatus(orderStatus);
+                System.out.println("ORDER STATUS is updated !!!");
+                return;
+            }
+
+            if (orderFromStorage.getOrderStatus() == OrderStatus.NEW && orderStatus == OrderStatus.CANCELED) {
+                orderFromStorage.setOrderStatus(orderStatus);
+            }
+
+        } catch (IllegalArgumentException e) {
             System.out.println("Please write right STATUS !!!");
         }
-
-
     }
 
     private static void deleteProduct() {
@@ -177,7 +232,7 @@ public class OnlineMarketMain implements Command {
 
     }
 
-    private static void userCommand() {
+    private static void userCommand(User user) {
 
         boolean isRun = true;
         while (isRun) {
@@ -191,25 +246,76 @@ public class OnlineMarketMain implements Command {
                     productStorage.print();
                     break;
                 case BUY_PRODUCT:
-                    buyProduct();
+                    buyProduct(user);
                     break;
                 case PRINT_MY_ORDERS:
+                    printOrders(user);
                     break;
                 case CANCEL_ORDER:
+                    deleteOrder(user);
                     break;
             }
         }
     }
 
+    private static void deleteOrder(User user) {
+        orderStorage.getOrderByUser(user);
+        System.out.println("Please choose ORDER ID");
+        String orderId = scanner.nextLine();
 
-    private static void buyProduct() {
+        Order orderFromStorage = orderStorage.getById(orderId);
+
+        if (orderFromStorage == null) {
+            System.out.println("Please write right ORDER ID");
+            return;
+        }
+
+        orderStorage.deleteOrder(orderFromStorage);
+
+    }
+
+    private static void printOrders(User user) {
+        orderStorage.getOrderByUser(user);
+    }
+
+    private static void buyProduct(User user) {
         productStorage.print();
         System.out.println("Please choose PRODUCT BY ID");
+
         String productId = scanner.nextLine();
         Product productFromStorage = productStorage.getProductByID(productId);
+
         if (productFromStorage == null) {
             System.out.println("You input PRODUCT ID wrong !!!");
             return;
+        }
+
+
+        String orderID = UUIDUtil.randomId();
+        try {
+            System.out.println("Please input Order count. We have " + productFromStorage.getStockQty() + " from that product");
+            int orderCount = Integer.parseInt(scanner.nextLine());
+
+            if (orderCount > productFromStorage.getStockQty()) {
+                System.out.println("Please input little count!!!");
+                return;
+            }
+
+            double orderPrice = orderCount * productFromStorage.getPrice();
+
+            System.out.println("Please choose PAYMENT METHOD ");
+
+            for (PaymentMethod value : PaymentMethod.values()) {
+                System.out.print(value + " ");
+            }
+
+            String paymentMethodStr = scanner.nextLine();
+            PaymentMethod paymentMethod = PaymentMethod.valueOf(paymentMethodStr);
+
+            Order order = new Order(orderID, user, productFromStorage, new Date(), orderCount, orderPrice, OrderStatus.NEW, paymentMethod);
+            orderStorage.add(order);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Wrong count !!!");
         }
 
 
