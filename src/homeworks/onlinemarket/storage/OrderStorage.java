@@ -43,16 +43,4 @@ public class OrderStorage {
             }
         }
     }
-
-    public void deleteOrder(Order orderFromStorage) {
-        for (int i = 0; i < size; i++) {
-            if (orders[i].equals(orderFromStorage)) {
-                orders[i].getProduct().setStockQty(orderFromStorage.getCount() + orders[i].getProduct().getStockQty());
-                for (int j = i; j < size; j++) {
-                    orders[j] = orders[j + 1];
-                }
-                size--;
-            }
-        }
-    }
 }

@@ -270,7 +270,7 @@ public class OnlineMarketMain implements Command {
             return;
         }
 
-        orderStorage.deleteOrder(orderFromStorage);
+        orderFromStorage.setOrderStatus(OrderStatus.CANCELED);
 
     }
 
