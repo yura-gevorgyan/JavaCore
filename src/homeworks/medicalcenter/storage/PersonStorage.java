@@ -1,9 +1,12 @@
 package homeworks.medicalcenter.storage;
 
+import classwork.chapter8.callingconsdemo.C;
 import homeworks.medicalcenter.model.Doctor;
 import homeworks.medicalcenter.model.Patient;
 import homeworks.medicalcenter.model.Person;
+import homeworks.medicalcenter.util.DateUtil;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class PersonStorage {
@@ -105,14 +108,23 @@ public class PersonStorage {
         return null;
     }
 
-    public Date researchTime(Doctor doctorFromStorage, Date researchDay, Date date) {
+    public boolean researchTime(Doctor doctorFromStorage, Date researchDay) {
         for (int i = 0; i < size; i++) {
-            if (people[i] instanceof Patient &&
-                    ((Patient) people[i]).getDoctor().equals(doctorFromStorage) &&
-                    ((Patient) people[i]).getResearchTime().equals(researchDay)) {
-                return researchDay;
+            if (people[i] instanceof Patient patient) {
+                if (patient.getDoctor().equals(doctorFromStorage)) {
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(patient.getResearchTime());
+                    calendar.add(Calendar.MINUTE, 30);
+                    Date researchDateTime30Plus = calendar.getTime();
+
+                    if (researchDateTime30Plus.after(researchDay)) {
+                        return true;
+                    }
+
+                }
             }
         }
-        return null;
+        return false;
     }
 }

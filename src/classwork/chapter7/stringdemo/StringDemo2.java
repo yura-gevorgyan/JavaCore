@@ -2,7 +2,7 @@ package classwork.chapter7.stringdemo;
 
 public class StringDemo2 {
     public static void main(String[] args) {
-        String strOb1 = "Firts";
+        String strOb1 = "First";
         String strOb2 = "Second";
         String strOb3 = strOb1;
 

@@ -100,17 +100,10 @@ public class MedicalCenterTest implements Command {
             String researchDayStr = scanner.nextLine();
             Date researchDay = DateUtil.stringToDateTime(researchDayStr);
 
-            Date date1 = personStorage.researchTime(doctorFromStorage, researchDay , date);
-            if (date1 == null) {
+            if (personStorage.researchTime(doctorFromStorage, researchDay)){
 
-                Patient patient = new Patient(patientId, patientName, patientSurname, phoneNumber,
-                        date, dateOfBirthday, researchDay, doctorFromStorage);
+                Patient patient = new Patient(patientId,patientName,patientSurname,phoneNumber,researchDay,dateOfBirthday,researchDay,doctorFromStorage);
                 personStorage.add(patient);
-                
-
-                System.out.println("Patient with " + patientId + " ID is added");
-            } else {
-                System.out.println("Doctor at that moment have already busy");
             }
 
 
