@@ -1,8 +1,11 @@
 package homeworks.onlinemarket.storage;
 
 import homeworks.onlinemarket.model.Product;
+import homeworks.onlinemarket.util.StorageSerializeUtil;
 
-public class ProductStorage {
+import java.io.Serializable;
+
+public class ProductStorage implements Serializable {
     private Product[] products = new Product[10];
     private int size = 0;
 
@@ -11,6 +14,7 @@ public class ProductStorage {
             extend();
         }
         products[size++] = product;
+        StorageSerializeUtil.serializeProductStorage(this);
     }
 
     public void print() {

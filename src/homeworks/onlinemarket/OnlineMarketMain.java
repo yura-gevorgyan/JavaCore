@@ -4,6 +4,7 @@ import homeworks.onlinemarket.model.*;
 import homeworks.onlinemarket.storage.OrderStorage;
 import homeworks.onlinemarket.storage.ProductStorage;
 import homeworks.onlinemarket.storage.UserStorage;
+import homeworks.onlinemarket.util.StorageSerializeUtil;
 import homeworks.onlinemarket.util.UUIDUtil;
 
 import java.util.Date;
@@ -12,9 +13,9 @@ import java.util.Scanner;
 public class OnlineMarketMain implements Command {
 
     private static Scanner scanner = new Scanner(System.in);
-    private static UserStorage userStorage = new UserStorage();
-    private static ProductStorage productStorage = new ProductStorage();
-    private static OrderStorage orderStorage = new OrderStorage();
+    private static UserStorage userStorage = StorageSerializeUtil.deserializeUserStorage();
+    private static ProductStorage productStorage = StorageSerializeUtil.deserializeProductStorage();
+    private static OrderStorage orderStorage = StorageSerializeUtil.deserializeOrderStorage();
 
     public static void main(String[] args) {
         boolean isRun = true;
@@ -57,6 +58,8 @@ public class OnlineMarketMain implements Command {
         for (UserType value : UserType.values()) {
             System.out.print(value + " ");
         }
+
+        System.out.println();
 
         System.out.println("Please choose USER TYPE");
         String userTypeStr = scanner.nextLine();
@@ -144,6 +147,8 @@ public class OnlineMarketMain implements Command {
             System.out.print(value + " ");
         }
 
+        System.out.println();
+
         System.out.println("Please choose NEW STATUS");
         String orderStatusStr = scanner.nextLine();
 
@@ -153,6 +158,7 @@ public class OnlineMarketMain implements Command {
                 int count = orderFromStorage.getProduct().getStockQty() - orderFromStorage.getCount();
                 orderFromStorage.setOrderStatus(orderStatus);
                 orderFromStorage.getProduct().setStockQty(count);
+                StorageSerializeUtil.serializeOrderStorage(orderStorage);
                 System.out.println("ORDER STATUS is updated !!!");
                 return;
             }
@@ -161,12 +167,14 @@ public class OnlineMarketMain implements Command {
                 int count = orderFromStorage.getCount() + orderFromStorage.getProduct().getStockQty();
                 orderFromStorage.getProduct().setStockQty(count);
                 orderFromStorage.setOrderStatus(orderStatus);
+                StorageSerializeUtil.serializeOrderStorage(orderStorage);
                 System.out.println("ORDER STATUS is updated !!!");
                 return;
             }
 
             if (orderFromStorage.getOrderStatus() == OrderStatus.NEW && orderStatus == OrderStatus.CANCELED) {
                 orderFromStorage.setOrderStatus(orderStatus);
+                StorageSerializeUtil.serializeOrderStorage(orderStorage);
             }
 
         } catch (IllegalArgumentException e) {
@@ -186,6 +194,7 @@ public class OnlineMarketMain implements Command {
         }
 
         productStorage.deleteProduct(productFromStorage);
+        StorageSerializeUtil.serializeProductStorage(productStorage);
     }
 
     private static void addProduct() {
@@ -205,30 +214,34 @@ public class OnlineMarketMain implements Command {
 
         System.out.println("Please input PRODUCT PRICE");
         double productPrice = Double.parseDouble(scanner.nextLine());
-
-        System.out.println("Please input PRODUCT COUNT");
-        int productCount = Integer.parseInt(scanner.nextLine());
-
-        System.out.println("Please choose PRODUCT TYPE");
-
-        for (ProductType value : ProductType.values()) {
-            System.out.print(value + " ");
-        }
-
         try {
+            System.out.println("Please input PRODUCT COUNT");
+            int productCount = Integer.parseInt(scanner.nextLine());
 
-            String productTypeStr = scanner.nextLine();
-            ProductType productType = ProductType.valueOf(productTypeStr.toUpperCase());
 
-            Product product = new Product(productId, productName, productDescription, productPrice, productCount, productType);
-            productStorage.add(product);
+            for (ProductType value : ProductType.values()) {
+                System.out.print(value + " ");
+            }
 
-            System.out.println("Product is added !!!");
+            System.out.println();
+            System.out.println("Please choose PRODUCT TYPE");
 
-        } catch (IllegalArgumentException e) {
-            System.out.println("Wrong PRODUCT TYPE !!!");
+            try {
+
+                String productTypeStr = scanner.nextLine();
+                ProductType productType = ProductType.valueOf(productTypeStr.toUpperCase());
+
+                Product product = new Product(productId, productName, productDescription, productPrice, productCount, productType);
+                productStorage.add(product);
+
+                System.out.println("Product is added !!!");
+
+            } catch (IllegalArgumentException e) {
+                System.out.println("Wrong PRODUCT TYPE !!!");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
         }
-
 
     }
 
@@ -271,6 +284,7 @@ public class OnlineMarketMain implements Command {
         }
 
         orderFromStorage.setOrderStatus(OrderStatus.CANCELED);
+        StorageSerializeUtil.serializeOrderStorage(orderStorage);
 
     }
 
@@ -310,10 +324,22 @@ public class OnlineMarketMain implements Command {
             }
 
             String paymentMethodStr = scanner.nextLine();
-            PaymentMethod paymentMethod = PaymentMethod.valueOf(paymentMethodStr);
+            PaymentMethod paymentMethod = PaymentMethod.valueOf(paymentMethodStr.toUpperCase());
 
-            Order order = new Order(orderID, user, productFromStorage, new Date(), orderCount, orderPrice, OrderStatus.NEW, paymentMethod);
-            orderStorage.add(order);
+            System.out.println("You want buy " + productFromStorage.getName() + " with " + orderCount + " count with " + orderPrice + " price");
+            System.out.println("Please input 1 for YES");
+            System.out.println("Please input 2 for NO");
+            String command = scanner.nextLine();
+            switch (command) {
+                case "1":
+                    Order order = new Order(orderID, user, productFromStorage, new Date(), orderCount, orderPrice, OrderStatus.NEW, paymentMethod);
+                    orderStorage.add(order);
+                    break;
+                case "2":
+                    break;
+            }
+
+
         } catch (IllegalArgumentException e) {
             System.out.println("Wrong count !!!");
         }

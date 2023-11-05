@@ -5,11 +5,13 @@ import homeworks.medicalcenter.model.Doctor;
 import homeworks.medicalcenter.model.Patient;
 import homeworks.medicalcenter.model.Person;
 import homeworks.medicalcenter.util.DateUtil;
+import homeworks.medicalcenter.util.StorageSerializeUtil;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-public class PersonStorage {
+public class PersonStorage implements Serializable {
 
     private Person[] people = new Person[10];
     private int size = 0;
@@ -19,6 +21,7 @@ public class PersonStorage {
             extend();
         }
         people[size++] = person;
+        StorageSerializeUtil.serializePersonStorage(this);
     }
 
     public void printDoctors() {

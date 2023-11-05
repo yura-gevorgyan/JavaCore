@@ -1,8 +1,9 @@
 package homeworks.medicalcenter.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Person {
+public class Person implements Serializable {
 
     private String Id;
     private String name;

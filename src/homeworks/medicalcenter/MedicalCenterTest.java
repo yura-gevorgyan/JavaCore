@@ -4,6 +4,7 @@ import homeworks.medicalcenter.model.Doctor;
 import homeworks.medicalcenter.model.Patient;
 import homeworks.medicalcenter.storage.PersonStorage;
 import homeworks.medicalcenter.util.DateUtil;
+import homeworks.medicalcenter.util.StorageSerializeUtil;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 public class MedicalCenterTest implements Command {
 
     private static Scanner scanner = new Scanner(System.in);
-    private static PersonStorage personStorage = new PersonStorage();
+    private static PersonStorage personStorage = StorageSerializeUtil.deserializePersonStorage();
 
     public static void main(String[] args) throws ParseException {
 
@@ -100,9 +101,9 @@ public class MedicalCenterTest implements Command {
             String researchDayStr = scanner.nextLine();
             Date researchDay = DateUtil.stringToDateTime(researchDayStr);
 
-            if (personStorage.researchTime(doctorFromStorage, researchDay)){
+            if (personStorage.researchTime(doctorFromStorage, researchDay)) {
 
-                Patient patient = new Patient(patientId,patientName,patientSurname,phoneNumber,researchDay,dateOfBirthday,researchDay,doctorFromStorage);
+                Patient patient = new Patient(patientId, patientName, patientSurname, phoneNumber, researchDay, dateOfBirthday, researchDay, doctorFromStorage);
                 personStorage.add(patient);
             }
 
@@ -141,6 +142,8 @@ public class MedicalCenterTest implements Command {
 
             doctorFromStorage.setProfession(profession);
 
+            StorageSerializeUtil.serializePersonStorage(personStorage);
+
             System.out.println("Doctor is updated !!!");
 
         } else {
@@ -170,6 +173,7 @@ public class MedicalCenterTest implements Command {
                 if (personStorage.getByID(id) instanceof Doctor) {
                     Doctor doctor = (Doctor) personStorage.getByID(id);
                     personStorage.changeDoctorForPatient(doctor, profession);
+                    StorageSerializeUtil.serializePersonStorage(personStorage);
                 }
             }
 

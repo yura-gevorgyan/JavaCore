@@ -2,8 +2,11 @@ package homeworks.onlinemarket.storage;
 
 import homeworks.onlinemarket.model.User;
 import homeworks.onlinemarket.model.UserType;
+import homeworks.onlinemarket.util.StorageSerializeUtil;
 
-public class UserStorage {
+import java.io.Serializable;
+
+public class UserStorage implements Serializable {
 
     private User[] users = new User[10];
     private int size = 0;
@@ -13,6 +16,7 @@ public class UserStorage {
             extend();
         }
         users[size++] = user;
+        StorageSerializeUtil.serializeUserStorage(this);
     }
 
     private void extend() {
