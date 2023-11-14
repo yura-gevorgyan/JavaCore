@@ -10,8 +10,10 @@ public class RecursiveFileUtil {
     public static void main(String[] args) {
 
 //      System.out.println(fileSearch("C:\\Program Files\\Git", "git-receive-pack.exe"));
+        //"C:\Program Files\Gitusr\ssl\openssl.cnf"
 
-        fileSearch();
+        // fileSearch();
+        printSizeOfPackage();
 
     }
 
@@ -29,25 +31,53 @@ public class RecursiveFileUtil {
         if (file.isFile()) {
             System.out.println("You input FILE PATH");
         } else {
-            System.out.println(recursiveFileSearch(file, fileName));
+            recursiveFileSearch(file, fileName);
         }
     }
 
-    private static boolean recursiveFileSearch(File file, String filName) {
-        boolean b = false;
+    private static void recursiveFileSearch(File file, String fileName) {
+
         File[] files = file.listFiles();
 
         if (files != null) {
             for (File file1 : files) {
                 if (file1.isDirectory()) {
-                    b = recursiveFileSearch(file1, filName);
-                } else if (file1.getName().equals(filName)) {
-                    b = true;
-                    break;
+                    recursiveFileSearch(file1, fileName);
+                } else if (file1.getName().equals(fileName)) {
+                    System.out.println(true);
                 }
             }
         }
-        return b;
+    }
+
+    static void printSizeOfPackage() {
+
+        System.out.println("Please input FILE PATH");
+        String filePath = scanner.nextLine();
+
+        File file = new File(filePath);
+
+        if (file.isFile()) {
+            System.out.println("You input FILE PATH");
+        } else {
+            System.out.println(recursivePrintSizeOfPackage(file));
+        }
+    }
+
+    static double recursivePrintSizeOfPackage(File file) {
+
+        File[] files = file.listFiles();
+        double size = 0;
+
+        if (files != null) {
+            for (File file1 : files) {
+                if (file1.isDirectory()) {
+                    recursivePrintSizeOfPackage(file1);
+                }
+                size += file1.length();
+            }
+        }
+        return size;
     }
 
 }
