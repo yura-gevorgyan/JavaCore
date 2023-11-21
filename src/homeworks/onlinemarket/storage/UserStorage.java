@@ -5,49 +5,37 @@ import homeworks.onlinemarket.model.UserType;
 import homeworks.onlinemarket.util.StorageSerializeUtil;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserStorage implements Serializable {
 
-    private User[] users = new User[10];
-    private int size = 0;
+    private Map<String, User> users = new HashMap<>();
 
     public void add(User user) {
-        if (size == users.length - 1) {
-            extend();
-        }
-        users[size++] = user;
+        users.put(user.getId(), user);
         StorageSerializeUtil.serializeUserStorage(this);
     }
 
-    private void extend() {
-        User[] tmp = new User[users.length + 10];
-        System.arraycopy(users, 0, tmp, 0, users.length);
-        users = tmp;
-    }
-
-    public void printUser() {
-        for (int i = 0; i < size; i++) {
-            if (users[i].getUserType().equals(UserType.USER)) {
-                System.out.println(users[i]);
-            }
+    public void print() {
+        for (User user : users.values()) {
+            System.out.println(user);
         }
     }
 
-
-    public User searchUser(String userEmail, String password) {
-        for (int i = 0; i < size; i++) {
-            if (users[i].getEmail().equals(userEmail)
-                    && users[i].getPassword().equals(password)) {
-                return users[i];
+    public User getByEmailAndPassword(String userEmail, String password) {
+        for (User user : users.values()) {
+            if (user.getEmail().equals(userEmail) && user.getPassword().equals(password)) {
+                return user;
             }
         }
         return null;
     }
 
     public User getByEmail(String userEmail) {
-        for (int i = 0; i < size; i++) {
-            if (users[i].getEmail().equals(userEmail)) {
-                return users[i];
+        for (User user : users.values()) {
+            if (user.getEmail().equals(userEmail)) {
+                return user;
             }
         }
         return null;

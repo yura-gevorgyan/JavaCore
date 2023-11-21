@@ -4,48 +4,34 @@ import homeworks.onlinemarket.model.Product;
 import homeworks.onlinemarket.util.StorageSerializeUtil;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ProductStorage implements Serializable {
-    private Product[] products = new Product[10];
-    private int size = 0;
+
+    private Set<Product> products = new HashSet<>();
 
     public void add(Product product) {
-        if (size == products.length - 1) {
-            extend();
-        }
-        products[size++] = product;
+        products.add(product);
         StorageSerializeUtil.serializeProductStorage(this);
     }
 
     public void print() {
-        for (int i = 0; i < size; i++) {
-            System.out.println(products[i]);
+        for (Product product : products) {
+            System.out.println(product);
         }
     }
 
-    private void extend() {
-        Product[] tmp = new Product[products.length + 10];
-        System.arraycopy(products, 0, tmp, 0, products.length);
-        products = tmp;
-    }
-
     public Product getProductByID(String productId) {
-        for (int i = 0; i < size; i++) {
-            if (products[i].getId().equals(productId)) {
-                return products[i];
+        for (Product product : products) {
+            if (product.getId().equals(productId)) {
+                return product;
             }
         }
         return null;
     }
 
     public void deleteProduct(Product productFromStorage) {
-        for (int i = 0; i < size; i++) {
-            if (products[i].equals(productFromStorage)) {
-                for (int j = i; j < size; j++) {
-                    products[j] = products[j + 1];
-                }
-            }
-        }
-        size--;
+        products.remove(productFromStorage);
     }
 }

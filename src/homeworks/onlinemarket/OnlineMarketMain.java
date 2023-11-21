@@ -81,7 +81,7 @@ public class OnlineMarketMain implements Command {
         System.out.println("Please input PASSWORD");
         String password = scanner.nextLine();
 
-        User user = userStorage.searchUser(userEmail, password);
+        User user = userStorage.getByEmailAndPassword(userEmail, password);
 
         if (user == null) {
             System.out.println("Invalid E-mail or Password !!!");
@@ -116,7 +116,7 @@ public class OnlineMarketMain implements Command {
                     productStorage.print();
                     break;
                 case PRINT_USERS:
-                    userStorage.printUser();
+                    userStorage.print();
                     break;
                 case PRINT_ORDERS:
                     orderStorage.print();
