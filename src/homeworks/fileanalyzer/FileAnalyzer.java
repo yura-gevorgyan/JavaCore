@@ -23,11 +23,11 @@ public class FileAnalyzer {
                         s = s.replaceAll("!", "");
                         s = s.replaceAll(":", "");
                         s = s.replaceAll("\\.", "");
-                        if (wordMap.get(s) == null) {
-                            wordMap.put(s, 1);
+                        if (wordMap.get(s.toLowerCase()) == null) {
+                            wordMap.put(s.toLowerCase(), 1);
                         } else {
-                            Integer iOb = wordMap.get(s);
-                            wordMap.put(s, ++iOb);
+                            Integer iOb = wordMap.get(s.toLowerCase());
+                            wordMap.put(s.toLowerCase(), ++iOb);
                         }
                     }
                 }
@@ -89,7 +89,7 @@ public class FileAnalyzer {
                         s = s.replaceAll("!", "");
                         s = s.replaceAll(":", "");
                         s = s.replaceAll("\\.", "");
-                        words.add(s);
+                        words.add(s.toLowerCase());
                     }
                 }
             } catch (IOException e) {
@@ -118,11 +118,11 @@ public class FileAnalyzer {
                         s = s.replaceAll("!", "");
                         s = s.replaceAll(":", "");
                         s = s.replaceAll("\\.", "");
-                        if (wordMap.get(s) == null) {
-                            wordMap.put(s, 1);
+                        if (wordMap.get(s.toLowerCase()) == null) {
+                            wordMap.put(s.toLowerCase(), 1);
                         } else {
-                            Integer iOb = wordMap.get(s);
-                            wordMap.put(s, ++iOb);
+                            Integer iOb = wordMap.get(s.toLowerCase());
+                            wordMap.put(s.toLowerCase(), ++iOb);
                         }
                     }
                 }
@@ -170,11 +170,11 @@ public class FileAnalyzer {
                         s = s.replaceAll("!", "");
                         s = s.replaceAll(":", "");
                         s = s.replaceAll("\\.", "");
-                        if (wordMap.get(s) == null) {
-                            wordMap.put(s, 1);
+                        if (wordMap.get(s.toLowerCase()) == null) {
+                            wordMap.put(s.toLowerCase(), 1);
                         } else {
-                            Integer iOb = wordMap.get(s);
-                            wordMap.put(s, ++iOb);
+                            Integer iOb = wordMap.get(s.toLowerCase());
+                            wordMap.put(s.toLowerCase(), ++iOb);
                         }
                     }
                 }

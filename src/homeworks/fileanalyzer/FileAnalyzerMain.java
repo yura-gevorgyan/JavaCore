@@ -47,7 +47,7 @@ public class FileAnalyzerMain implements Command {
         System.out.println("Please input WORD");
         String word = SCANNER.nextLine();
 
-        int i = fileAnalyzer.countWordOccurrences(filePath, word);
+        int i = fileAnalyzer.countWordOccurrences(filePath, word.toLowerCase());
 
         if (i != 0) {
             System.out.println(word + ": " + i);
