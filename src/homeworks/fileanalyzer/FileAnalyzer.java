@@ -66,6 +66,16 @@ public class FileAnalyzer {
     // Читаем файл, подсчитываем количество уникальных слов
     public int uniqueWordCount(String path) {
 
+//        Map<String, Integer> wordMap = wordMap(path);
+//        Set<String> words = new HashSet<>();
+//
+//        for (Map.Entry<String, Integer> stringIntegerEntry : wordMap.entrySet()) {
+//            words.add(stringIntegerEntry.getKey());
+//        }
+//
+//        return words.size();
+
+
         Set<String> words = new HashSet<>();
         File file = new File(path);
 

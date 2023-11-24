@@ -109,8 +109,9 @@ public class FileUtil implements Command {
 
                         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file1))) {
 
-                            while (bufferedReader.readLine() != null) {
-                                if (bufferedReader.readLine().contains(keyword)) {
+                            String line;
+                            while ((line = bufferedReader.readLine()) != null) {
+                                if (line.contains(keyword)) {
                                     System.out.println(file1);
                                     break;
                                 }
@@ -158,12 +159,12 @@ public class FileUtil implements Command {
                     if (file1.isFile() && file1.getName().endsWith(".txt")) {
 
                         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file1))) {
-
-                            while (bufferedReader.readLine() != null) {
+                            String line;
+                            while ((line = bufferedReader.readLine()) != null) {
                                 int num = 0;
                                 num++;
-                                if (bufferedReader.readLine().contains(keyword)) {
-                                    System.out.println(num + " " + bufferedReader.readLine());
+                                if (line.contains(keyword)) {
+                                    System.out.println(num + " " + line);
                                 }
                             }
 
