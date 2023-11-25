@@ -19,15 +19,12 @@ public class FileAnalyzer {
                 while ((line = bufferedReader.readLine()) != null) {
                     String[] word = line.split(" ");
                     for (String s : word) {
-                        s = s.replaceAll(",", "");
-                        s = s.replaceAll("!", "");
-                        s = s.replaceAll(":", "");
-                        s = s.replaceAll("\\.", "");
-                        if (wordMap.get(s.toLowerCase()) == null) {
-                            wordMap.put(s.toLowerCase(), 1);
+                        String stringWithoutChar = StringUtil.stringWithoutChar(s);
+                        if (wordMap.get(stringWithoutChar.toLowerCase()) == null) {
+                            wordMap.put(stringWithoutChar.toLowerCase(), 1);
                         } else {
-                            Integer iOb = wordMap.get(s.toLowerCase());
-                            wordMap.put(s.toLowerCase(), ++iOb);
+                            Integer iOb = wordMap.get(stringWithoutChar.toLowerCase());
+                            wordMap.put(stringWithoutChar.toLowerCase(), ++iOb);
                         }
                     }
                 }
@@ -85,11 +82,8 @@ public class FileAnalyzer {
                 while ((line = bufferedReader.readLine()) != null) {
                     String[] word = line.split(" ");
                     for (String s : word) {
-                        s = s.replaceAll(",", "");
-                        s = s.replaceAll("!", "");
-                        s = s.replaceAll(":", "");
-                        s = s.replaceAll("\\.", "");
-                        words.add(s.toLowerCase());
+                        String stringWithoutChar = StringUtil.stringWithoutChar(s);
+                        words.add(stringWithoutChar.toLowerCase());
                     }
                 }
             } catch (IOException e) {
@@ -104,90 +98,33 @@ public class FileAnalyzer {
 
     public Map<String, Integer> topFrequentWords(String path, int n) {
 
-        File file = new File(path);
-        Map<String, Integer> wordMap = new HashMap<>();
+        Map<String, Integer> wordMap = wordMap(path);
         Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
 
-        if (file.isFile() && file.getName().endsWith(".txt")) {
-            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    String[] words = line.split(" ");
-                    for (String s : words) {
-                        s = s.replaceAll(",", "");
-                        s = s.replaceAll("!", "");
-                        s = s.replaceAll(":", "");
-                        s = s.replaceAll("\\.", "");
-                        if (wordMap.get(s.toLowerCase()) == null) {
-                            wordMap.put(s.toLowerCase(), 1);
-                        } else {
-                            Integer iOb = wordMap.get(s.toLowerCase());
-                            wordMap.put(s.toLowerCase(), ++iOb);
-                        }
-                    }
+        if (n <= wordMap.size()) {
+
+            List<Map.Entry<String, Integer>> topFrequentWords = new ArrayList<>(wordMap.entrySet());
+            topFrequentWords.sort(new Comparator<Map.Entry<String, Integer>>() {
+                @Override
+                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                    return o2.getValue().compareTo(o1.getValue());
                 }
-                if (n <= wordMap.size()) {
+            });
 
-                    List<Map.Entry<String, Integer>> topFrequentWords = new ArrayList<>(wordMap.entrySet());
-                    topFrequentWords.sort(new Comparator<Map.Entry<String, Integer>>() {
-                        @Override
-                        public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                            return o2.getValue().compareTo(o1.getValue());
-                        }
-                    });
-
-                    for (Map.Entry<String, Integer> topFrequentWord : topFrequentWords) {
-                        linkedHashMap.put(topFrequentWord.getKey(), topFrequentWord.getValue());
-                    }
-
-                } else {
-                    System.out.println("       ");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            for (Map.Entry<String, Integer> topFrequentWord : topFrequentWords) {
+                linkedHashMap.put(topFrequentWord.getKey(), topFrequentWord.getValue());
             }
         } else {
-            System.out.println("Your input file is not .txt file");
+            System.out.println("       ");
         }
-
         return linkedHashMap;
     }
-
 
     // Читаем файл, находим количество вхождений слова и возвращаем это число
     public int countWordOccurrences(String path, String word) {
 
-        File file = new File(path);
-        Map<String, Integer> wordMap = new HashMap<>();
+        Map<String, Integer> wordMap = wordMap(path);
+        return wordMap.get(word);
 
-        if (file.isFile() && file.getName().endsWith(".txt")) {
-            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    String[] words = line.split(" ");
-                    for (String s : words) {
-                        s = s.replaceAll(",", "");
-                        s = s.replaceAll("!", "");
-                        s = s.replaceAll(":", "");
-                        s = s.replaceAll("\\.", "");
-                        if (wordMap.get(s.toLowerCase()) == null) {
-                            wordMap.put(s.toLowerCase(), 1);
-                        } else {
-                            Integer iOb = wordMap.get(s.toLowerCase());
-                            wordMap.put(s.toLowerCase(), ++iOb);
-                        }
-                    }
-                }
-                return wordMap.get(word);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Your input file is not .txt file");
-        }
-        return 0;
     }
-
 }
-
